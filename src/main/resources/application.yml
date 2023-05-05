@@ -6,3 +6,5 @@ spring:
       port: 27017
       database: crmdb
       authentication-database: admin
+      username: mitocode
+      password: mitocode
