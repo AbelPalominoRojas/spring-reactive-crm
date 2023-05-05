@@ -1,25 +1,32 @@
 package com.pirqana.springreactivecrm.api.controller;
 
 
-import com.pirqana.springreactivecrm.persistence.entity.Cuenta;
-import com.pirqana.springreactivecrm.persistence.repository.CuentaRepository;
+import com.pirqana.springreactivecrm.application.dto.cuenta.CuentaDto;
+import com.pirqana.springreactivecrm.application.service.CuentaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RequestMapping("cuentas")
 @RequiredArgsConstructor
 @RestController
 public class CuentaController {
-    private final CuentaRepository cuentaRepository;
+    private final CuentaService cuentaService;
 
 
     @GetMapping
-    public ResponseEntity<Flux<Cuenta>> findAll(){
-        return ResponseEntity.ok(cuentaRepository.findAll());
+    public ResponseEntity<Flux<CuentaDto>> findAll(){
+        return ResponseEntity.ok(cuentaService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Mono<CuentaDto>>findById(@PathVariable("id") String id){
+        return ResponseEntity.ok(cuentaService.findById(id));
     }
 
 }
