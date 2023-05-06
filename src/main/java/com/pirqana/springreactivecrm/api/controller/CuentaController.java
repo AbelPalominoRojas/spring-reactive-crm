@@ -2,10 +2,13 @@ package com.pirqana.springreactivecrm.api.controller;
 
 
 import com.pirqana.springreactivecrm.application.dto.cuenta.CuentaDto;
+import com.pirqana.springreactivecrm.application.dto.cuenta.CuentaFilterDto;
 import com.pirqana.springreactivecrm.application.dto.cuenta.CuentaSaveDto;
 import com.pirqana.springreactivecrm.application.service.CuentaService;
+import com.pirqana.springreactivecrm.shared.pagination.PageFilter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -41,6 +44,11 @@ public class CuentaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Mono<CuentaDto>> disable(@PathVariable("id") String id){
         return ResponseEntity.ok(cuentaService.disable(id));
+    }
+
+    @PostMapping("/pagination")
+    public ResponseEntity<Mono<Page<CuentaDto>>> pagination(@RequestBody PageFilter<CuentaFilterDto> pageFilter) {
+        return ResponseEntity.ok(cuentaService.pagination(pageFilter));
     }
 
 }
